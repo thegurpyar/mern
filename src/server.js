@@ -9,7 +9,7 @@ dotenv.config();
 
 const app = express();
 
-
+app.get("/",(req,res)=>res.send("api is running"))
 app.use(express.json());
 app.use(cors());
 
