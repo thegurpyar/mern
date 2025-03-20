@@ -11,6 +11,15 @@ export const addPost = asyncHandler(async (req, res) => {
   return res.status(200).json({ post, message: "Post added successfully" });
 });
 
+export const getPost = asyncHandler(async (req, res) => {
+  const post = await postModel.findById(req.params.id).populate("author", "username").lean();
+  if (!post || post.author.toString() !== req.user.id) {
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+
+  return res.status(200).json({ post });
+});
+
 export const getAllPosts = asyncHandler(async (req, res) => {
   // Get page and limit from query parameters (with defaults)
   const page = parseInt(req.query.page) || 1;
