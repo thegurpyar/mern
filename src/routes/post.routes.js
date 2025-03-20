@@ -9,7 +9,7 @@ router.post("/", authMiddleware, addPost);
 
 router.get("/", getAllPosts);
 
-router.get("/:id", getPost);
+router.get("/:id",authMiddleware, getPost);
 
 router.put("/:id", authMiddleware, editPost);
 

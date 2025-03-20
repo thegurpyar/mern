@@ -12,10 +12,12 @@ export const addPost = asyncHandler(async (req, res) => {
 });
 
 export const getPost = asyncHandler(async (req, res) => {
-  const post = await postModel.findById(req.params.id).populate("author", "username").lean();
-  if (!post || post.author.toString() !== req.user.id) {
-    return res.status(403).json({ error: "Unauthorized" });
+  const id = req.params.id
+  if(!id){
+    return res.status(400).json({message:"Please provide id"})
   }
+  const post = await postModel.findById(id).populate("author", "username").lean();
+
 
   return res.status(200).json({ post });
 });
